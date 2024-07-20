@@ -1,13 +1,13 @@
 window.generateCode = function() {
     const size = document.getElementById('business-size').value;
-    if (size && wordsArray.length > 0) {
+    if (size) {
+        const wordsArray = ["word1", "word2", "word3"]; // Add your words from words.js here
         const code = `${wordsArray[Math.floor(Math.random() * wordsArray.length)]}${wordsArray[Math.floor(Math.random() * wordsArray.length)]}${wordsArray[Math.floor(Math.random() * wordsArray.length)]}`;
-        localStorage.setItem('businessSize', size);
         localStorage.setItem('custom_user_id', code);
+        localStorage.setItem('businessSize', size);
         localStorage.setItem('task1-status', 'Not complete');
         localStorage.setItem('task2-status', 'Not complete');
         localStorage.setItem('task3-status', 'Not complete');
-        document.cookie = `custom_user_id=${code}; path=/`; // Set the custom_user_id cookie
         window.location.href = 'tasks.html';
     } else {
         alert('Please select a business size.');
@@ -18,14 +18,18 @@ window.loadCode = function() {
     const code = localStorage.getItem('custom_user_id');
     if (code) {
         document.getElementById('generated-code').textContent = code;
-        document.cookie = `custom_user_id=${code}; path=/`; // Set the custom_user_id cookie
-        loadRecordData();
+        loadRecordData(code);
     } else {
         window.location.href = 'index.html';
     }
 }
 
-function loadRecordData() {
+window.clearData = function() {
+    localStorage.clear();
+    window.location.href = 'index.html';
+}
+
+function loadRecordData(code) {
     document.getElementById('task1-status').textContent = localStorage.getItem('task1-status');
     document.getElementById('task2-status').textContent = localStorage.getItem('task2-status');
     document.getElementById('task3-status').textContent = localStorage.getItem('task3-status');
@@ -66,11 +70,12 @@ function updateDropdowns() {
 function updateStatusColor(taskId) {
     const statusElement = document.getElementById(`${taskId}-status`);
     const status = statusElement.textContent;
+    statusElement.className = '';
     if (status === 'Not complete') {
-        statusElement.className = 'not-complete';
+        statusElement.classList.add('not-complete');
     } else if (status === 'Complete') {
-        statusElement.className = 'complete';
+        statusElement.classList.add('complete');
     } else if (status === 'Skipped') {
-        statusElement.className = 'skipped';
+        statusElement.classList.add('skipped');
     }
 }

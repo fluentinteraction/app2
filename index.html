@@ -10,12 +10,6 @@
             var code = localStorage.getItem('custom_user_id');
             if (code) {
                 window.location.href = 'tasks.html';
-            } else {
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({
-                    'event': 'login',
-                    'custom_user_id': code
-                });
             }
         })();
     </script>
@@ -26,7 +20,6 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-K45J2CVG');</script>
     <!-- End Google Tag Manager -->
-    <script src="words.js"></script>
     <script src="script.js"></script>
 </head>
 <body>

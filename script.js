@@ -43,9 +43,18 @@ window.updateStatus = function(taskId) {
     const dropdown = document.getElementById(`${taskId}-update`);
     const status = dropdown.value;
     if (status) {
+        const taskName = taskId.replace('-', ' '); // Assuming taskId is in format task1, task2, etc.
         document.getElementById(`${taskId}-status`).textContent = status;
         updateStatusColor(taskId);
         localStorage.setItem(`${taskId}-status`, status);
+        
+        // Fire GTM event
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'status_update',
+            task_name: taskName,
+            status: status
+        });
     } else {
         alert('Please select a status.');
     }
